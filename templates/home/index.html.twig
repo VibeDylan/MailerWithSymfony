@@ -4,6 +4,12 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Nous contacter (Efficience IT Test)</h1>
-	<a class="btn btn-sm btn-primary" href="{{ path('contact') }}">Contactez-nous</a>
+	<div class="row">
+		<h1 class="text-center">Nous contacter (Efficience IT Test)</h1>
+		<a class="btn btn-sm btn-primary" href="{{ path('contact') }}">Contactez-nous</a>
+		<p class="text-center mt-2">Bonjour, pour tester l'envoie de mail, j'ai utilisé l'outil mailtrap. Voici ci-joint le screeshot du mail bien reçu. La configuration pour se connecter au service de mailtrap ce trouve dans le .env (mailer_dsn)</p>
+		<p class="text-center bg-code">###> symfony/mailer ###<br>
+			MAILER_DSN=smtp://7c9b7fd4ac2944:d959de9ba244cb@smtp.mailtrap.io:2525?encryption=tls&auth_mode=login
+			<br>###< symfony/mailer ###t</p>
+		<img src="{{ asset('../img/screen.png') }}" alt="screenshot" class="img_fluid mt-2"></div>
 {% endblock %}
