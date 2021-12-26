@@ -15,10 +15,19 @@ class ContactController extends AbstractController
 {
 
 
+    private $departementRepository;
+    private $mailer;
+
+    public function __construct(DepartementRepository $departementRepository, MailerInterface $mailer)
+    {
+        $this->departementRepository = $departementRepository;
+        $this->mailer = $mailer;
+    }
+
     /**
      * @Route("/contact", name="contact")
      */
-    public function index(Request $request, DepartementRepository $departementRepository, MailerInterface $mailer)
+    public function index(Request $request)
     {
 
         $form = $this->createForm(ContactType::class);
@@ -27,11 +36,10 @@ class ContactController extends AbstractController
 
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $formSubmit = $request->get('contact');
-            $whoResponsable = $departementRepository->find($formSubmit['departement']);
+            $whoResponsable = $this->departementRepository->find($formSubmit['departement']);
 
             $email = (new Email())
                 ->from($formSubmit['mail'])
@@ -39,7 +47,7 @@ class ContactController extends AbstractController
                 ->subject('Email de : ' . $formSubmit['name'] . ' ' . $formSubmit['prenom'])
                 ->html($formSubmit['message']);
 
-            $mailer->send($email);
+            $this->mailer->send($email);
 
             $this->addFlash('success', "Votre message à bien était envoyer");
 
