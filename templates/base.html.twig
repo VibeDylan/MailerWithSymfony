@@ -20,7 +20,15 @@
 		{% endblock %}
 	</head>
 	<body>
-		<div class="container"> {% block body %}{% endblock %}
-			</div>
-		</body>
-	</html>
+		<div class="container container pt-5 mb-4">
+			{% for rubrique, messages in app.flashes %}
+				<div class="alert alert-{{rubrique}}">
+					{% for message in messages %}
+						<p>{{ message }}</p>
+					{% endfor %}
+				</div>
+			{% endfor %}
+			{% block body %}{% endblock %}
+		</div>
+	</body>
+</html>
