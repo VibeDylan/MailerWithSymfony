@@ -24,6 +24,7 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactType::class);
 
         $formView = $form->createView();
+
         $form->handleRequest($request);
 
 
@@ -35,11 +36,11 @@ class ContactController extends AbstractController
             $email = (new Email())
                 ->from($formSubmit['mail'])
                 ->to($whoResponsable->getResponsable())
-                ->subject('Email de : ' . $formSubmit['name'])
-                ->text($formSubmit['message']);
-            // ->html('<p>See Twig integration for better HTML integration!</p>');
+                ->subject('Email de : ' . $formSubmit['name'] . ' ' . $formSubmit['prenom'])
+                ->html($formSubmit['message']);
 
-            dump($email);
+            $mailer->send($email);
+
             $this->addFlash('success', "Votre message à bien était envoyer");
 
             return $this->redirectToRoute("homepage");
