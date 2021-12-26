@@ -4,5 +4,21 @@
 {% endblock %}
 
 {% block body %}
-	Coucou
+	{{ form_start(formView) }}
+
+	{{ form_errors(formView) }}
+
+	<div class="row">
+		<div class="col-12">
+			{{form_row(formView)}}
+		</div>
+	</div>
+
+
+	<button type="submit" class="btn btn-primary mt-1">
+		<i class="fas fa-save"></i>
+		Envoyez le message
+	</button>
+
+	{{ form_end(formView) }}
 {% endblock %}
