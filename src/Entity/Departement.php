@@ -20,12 +20,12 @@ class Departement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Responsable;
+    private $responsable;
 
     public function getId(): ?int
     {
@@ -37,21 +37,21 @@ class Departement
         return $this->Name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getResponsable(): ?string
     {
-        return $this->Responsable;
+        return $this->responsable;
     }
 
-    public function setResponsable(string $Responsable): self
+    public function setResponsable(string $responsable): self
     {
-        $this->Responsable = $Responsable;
+        $this->responsable = $responsable;
 
         return $this;
     }
