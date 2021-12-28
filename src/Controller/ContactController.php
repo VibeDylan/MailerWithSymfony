@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Controller\MailService\MailService;
 use App\Form\ContactType;
-use App\Mail\MailToDatabaseService;
+use App\MailService\MailToDatabaseService;
 use App\Repository\DepartementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;

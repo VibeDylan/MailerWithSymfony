@@ -5,10 +5,9 @@ namespace App\MailService;
 use App\Entity\Messages;
 use App\Repository\DepartementRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class MailToDatabaseService extends AbstractController
+class MailToDatabaseService
 {
 
     public function saveMessage(Request $request, EntityManagerInterface $em, DepartementRepository $departementRepository)

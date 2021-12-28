@@ -6,10 +6,9 @@ use Symfony\Component\Mime\Email;
 use App\Repository\DepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-class MailService extends AbstractController
+class MailService
 {
 
     private $departementRepository;
