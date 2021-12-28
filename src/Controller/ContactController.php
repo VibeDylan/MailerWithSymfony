@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Mail\MailService;
 use App\Form\ContactType;
 use App\Repository\DepartementRepository;
 use Symfony\Component\Mime\Email;
@@ -38,24 +39,15 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $formSubmit = $request->get('contact');
-            $whoResponsable = $this->departementRepository->find($formSubmit['departement']);
+            $mail = new MailService($this->departementRepository, $this->mailer);
+            $mail->sendMail($request);
 
-            $email = (new Email())
-                ->from($formSubmit['mail'])
-                ->to($whoResponsable->getResponsable())
-                ->subject('Email de : ' . $formSubmit['name'] . ' ' . $formSubmit['prenom'])
-                ->html($formSubmit['message']);
-
-            $this->mailer->send($email);
-
-            $this->addFlash('success', "Votre message à bien était envoyer");
+            $this->addFlash("success", "Votre message à bien était envoyé");
 
             return $this->redirectToRoute("homepage");
         }
 
         return $this->render('contact/index.html.twig', [
-            'controller_name' => 'ContactController',
             'formView' => $formView
         ]);
     }
