@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Controller\Mail;
+namespace App\Controller\MailService;
 
-use App\Entity\Messages;
 use Symfony\Component\Mime\Email;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\DepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;

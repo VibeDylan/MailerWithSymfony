@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Controller\Mail\MailService;
+use App\Controller\MailService\MailService;
 use App\Form\ContactType;
 use App\Mail\MailToDatabaseService;
 use App\Repository\DepartementRepository;

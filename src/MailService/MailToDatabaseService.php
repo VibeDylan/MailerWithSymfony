@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\MailService;
 
 use App\Entity\Messages;
 use App\Repository\DepartementRepository;
