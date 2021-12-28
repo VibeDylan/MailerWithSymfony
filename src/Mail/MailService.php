@@ -4,7 +4,6 @@ namespace App\Controller\Mail;
 
 use App\Entity\Messages;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Mailer\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\DepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +22,7 @@ class MailService extends AbstractController
         $this->mailer = $mailer;
     }
 
-
-    public function sendMail(Request $request, EntityManagerInterface $em)
+    public function sendMail(Request $request)
     {
         $formSubmit = $request->get('contact');
         $whoResponsable = $this->departementRepository->find($formSubmit['departement']);
@@ -35,15 +33,6 @@ class MailService extends AbstractController
             ->subject('Email de : ' . $formSubmit['name'] . ' ' . $formSubmit['prenom'])
             ->html($formSubmit['message']);
 
-        $message = new Messages();
-        $message->setSender($formSubmit['mail'])
-            ->setReceiver($whoResponsable->getResponsable())
-            ->setSubject('Email de : ' . $formSubmit['name'] . ' ' . $formSubmit['prenom'])
-            ->setMessage($formSubmit['message']);
-
-
-        $em->persist($message);
-        $em->flush($message);
 
         $this->mailer->send($email);
     }
