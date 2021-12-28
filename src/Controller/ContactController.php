@@ -15,23 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ContactController extends AbstractController
 {
-
-
-    private $departementRepository;
-    private $mailer;
-    private $em;
-
-    public function __construct(DepartementRepository $departementRepository, MailerInterface $mailer, EntityManagerInterface $em)
-    {
-        $this->departementRepository = $departementRepository;
-        $this->mailer = $mailer;
-        $this->em = $em;
-    }
-
     /**
      * @Route("/contact", name="contact")
      */
-    public function create(Request $request)
+    public function create(Request $request, MailService $mail, MailToDatabaseService $message)
     {
 
         $form = $this->createForm(ContactType::class);
