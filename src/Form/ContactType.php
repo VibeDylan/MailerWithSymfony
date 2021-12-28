@@ -41,11 +41,4 @@ class ContactType extends AbstractType
                 'attr' => ['placeholder' => 'Veuillez tapez votre message']
             ]);
     }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            // Configure your form options here
-        ]);
-    }
 }
