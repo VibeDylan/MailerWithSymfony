@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ContactController extends AbstractController
 {
+
     /**
      * @Route("/", name="contact")
      */
@@ -26,6 +27,7 @@ class ContactController extends AbstractController
 
             $mail->sendMail($request);
             $message->saveMessage($request);
+
             $this->addFlash("success", "Votre message à bien était envoyé");
         }
 
