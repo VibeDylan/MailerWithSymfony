@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Controller\Mail\MailService;
 use App\Form\ContactType;
 use App\Repository\DepartementRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,29 +20,29 @@ class ContactController extends AbstractController
 
     private $departementRepository;
     private $mailer;
+    private $em;
 
-    public function __construct(DepartementRepository $departementRepository, MailerInterface $mailer)
+    public function __construct(DepartementRepository $departementRepository, MailerInterface $mailer, EntityManagerInterface $em)
     {
         $this->departementRepository = $departementRepository;
         $this->mailer = $mailer;
+        $this->em = $em;
     }
 
     /**
      * @Route("/contact", name="contact")
      */
-    public function index(Request $request)
+    public function create(Request $request)
     {
 
         $form = $this->createForm(ContactType::class);
-
         $formView = $form->createView();
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $mail = new MailService($this->departementRepository, $this->mailer);
-            $mail->sendMail($request);
+            $mail = new MailService($this->departementRepository, $this->mailer, $this->em);
+            $mail->sendMail($request, $this->em);
 
             $this->addFlash("success", "Votre message à bien était envoyé");
 
