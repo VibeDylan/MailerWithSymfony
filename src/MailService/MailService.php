@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\MailService;
+namespace App\MailService;
 
 use Symfony\Component\Mime\Email;
 use App\Repository\DepartementRepository;

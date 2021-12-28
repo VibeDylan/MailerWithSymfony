@@ -10,11 +10,16 @@ use Symfony\Component\HttpFoundation\Request;
 class MailToDatabaseService
 {
 
-    public function saveMessage(Request $request, EntityManagerInterface $em, DepartementRepository $departementRepository)
+    public function __construct(EntityManagerInterface $em, DepartementRepository $departementRepository)
     {
+        $this->em = $em;
+        $this->departementRepository = $departementRepository;
+    }
 
+    public function saveMessage(Request $request)
+    {
         $formSubmit = $request->get('contact');
-        $whoResponsable = $departementRepository->find($formSubmit['departement']);
+        $whoResponsable = $this->departementRepository->find($formSubmit['departement']);
 
         $message = new Messages();
         $message->setSender($formSubmit['mail'])
@@ -22,7 +27,7 @@ class MailToDatabaseService
             ->setSubject('Email de : ' . $formSubmit['name'] . ' ' . $formSubmit['prenom'])
             ->setMessage($formSubmit['message']);
 
-        $em->persist($message);
-        $em->flush($message);
+        $this->em->persist($message);
+        $this->em->flush($message);
     }
 }

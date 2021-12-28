@@ -23,4 +23,9 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    App\MailService\:
+        resource: '../src/MailService/'
+        tags: ['mail.service_arguments']
+
+
     # add more service definitions when explicit configuration is needed
