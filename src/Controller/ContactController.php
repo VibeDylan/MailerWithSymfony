@@ -27,13 +27,8 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $mail = new MailService($this->departementRepository, $this->mailer);
             $mail->sendMail($request);
-
-            $message = new MailToDatabaseService();
             $message->saveMessage($request, $this->em, $this->departementRepository);
-
-
             $this->addFlash("success", "Votre message à bien était envoyé");
 
             return $this->redirectToRoute("homepage");
