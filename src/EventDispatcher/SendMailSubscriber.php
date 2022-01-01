@@ -4,6 +4,7 @@ namespace App\EventDispatcher;
 
 
 use App\Event\SendMailEvent;
+
 use App\Repository\DepartementRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,12 +14,10 @@ use Symfony\Component\Mime\Email;
 class SendMailSubscriber implements EventSubscriberInterface {
 
     private $departementRepository;
-
     public function __construct(DepartementRepository $departementRepository, MailerInterface $mailer) {
         $this->departementRepository = $departementRepository;
         $this->mailer = $mailer;
     }
-
     public static function getSubscribedEvents()
     {
         return [
@@ -26,10 +25,11 @@ class SendMailSubscriber implements EventSubscriberInterface {
         ];
     }
 
-    public function sendMail(Request $request) {
+    public function sendMail(SendMailEvent $event) {
 
-        $formSubmit = $request->get('contact');
+        $formSubmit = $event->getInfo();
         $whoResponsable = $this->departementRepository->find($formSubmit['departement']);
+       //  dd($event);
 
         $email = (new Email())
             ->from($formSubmit['mail'])

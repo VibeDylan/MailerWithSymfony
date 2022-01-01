@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Event\SendMailEvent;
 use App\Form\ContactType;
 use App\MailService\MailToDatabaseService;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -26,7 +27,10 @@ class ContactController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $message->saveMessage($request);
-            $eventDispatcher->dispatch($request, 'send.mail');
+
+            $emailEvent = new SendMailEvent($request->get('contact'));
+            $eventDispatcher->dispatch($emailEvent, 'send.mail');
+
 
             $this->addFlash("success", "Votre message à bien était envoyé");
         }
