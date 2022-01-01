@@ -38,6 +38,10 @@ class ContactType extends AbstractType
                     return strtoupper($departement->getName());
                 }
             ])
+            ->add('object', TextType::class, [
+                'label' => 'Objet du message',
+                'attr' => ['placeholder' => 'Veuillez tapez votre objet']
+            ])
             ->add('message', TextareaType::class, [
                 'label' => 'Votre message',
                 'attr' => ['placeholder' => 'Veuillez tapez votre message']
