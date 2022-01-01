@@ -27,7 +27,7 @@ class MailService
         $email = (new Email())
             ->from($formSubmit['mail'])
             ->to($whoResponsable->getResponsable())
-            ->subject($formSubmit['object'])
+            ->subject($formSubmit['mail'])
             ->html($formSubmit['message']);
 
 

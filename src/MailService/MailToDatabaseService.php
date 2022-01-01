@@ -24,7 +24,7 @@ class MailToDatabaseService
         $message = new Messages();
         $message->setSender($formSubmit['mail'])
             ->setReceiver($whoResponsable->getResponsable())
-            ->setSubject($formSubmit['object'])
+            ->setSubject($formSubmit['mail'])
             ->setMessage($formSubmit['message']);
 
         $this->em->persist($message);
