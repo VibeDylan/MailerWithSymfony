@@ -31,7 +31,6 @@ class ContactController extends AbstractController
             $emailEvent = new SendMailEvent($request->get('contact'));
             $eventDispatcher->dispatch($emailEvent, 'send.mail');
 
-
             $this->addFlash("success", "Votre message à bien était envoyé");
         }
 
