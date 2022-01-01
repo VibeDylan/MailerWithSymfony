@@ -27,15 +27,15 @@ class SendMailSubscriber implements EventSubscriberInterface {
 
     public function sendMail(SendMailEvent $event) {
 
-        $formSubmit = $event->getInfo();
-        $whoResponsable = $this->departementRepository->find($formSubmit['departement']);
+        $data = $event->getInfo();
+        $whoResponsable = $this->departementRepository->find($data['departement']);
        //  dd($event);
 
         $email = (new Email())
-            ->from($formSubmit['mail'])
+            ->from($data['mail'])
             ->to($whoResponsable->getResponsable())
-            ->subject($formSubmit['object'])
-            ->html($formSubmit['message']);
+            ->subject($data['object'])
+            ->html($data['message']);
 
 
         $this->mailer->send($email);
