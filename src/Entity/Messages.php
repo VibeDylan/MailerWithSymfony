@@ -37,6 +37,17 @@ class Messages
      */
     private $message;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="messages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $departement;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $departementname;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +97,30 @@ class Messages
     public function setMessage(string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    public function getDepartementname(): ?string
+    {
+        return $this->departementname;
+    }
+
+    public function setDepartementname(string $departementname): self
+    {
+        $this->departementname = $departementname;
 
         return $this;
     }
