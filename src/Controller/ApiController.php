@@ -30,11 +30,7 @@ class ApiController extends AbstractController
      *
      */
     public function postMail(Request $request) {
-
-        $request->request->get('contact', 'default category');
-
-
-        return $this->json($departments, 200, [],   ['groups' => 'departement:read']);
+        // TO DO
     }
 
 }
