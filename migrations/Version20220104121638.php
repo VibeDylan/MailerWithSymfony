@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220104120519 extends AbstractMigration
+final class Version20220104121638 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,8 +20,8 @@ final class Version20220104120519 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE messages ADD departementname VARCHAR(255) NOT NULL');
-        //$this->addSql('ALTER TABLE messages ADD CONSTRAINT FK_DB021E96CCF9E01E FOREIGN KEY (departement_id) REFERENCES departement (id)');
+        $this->addSql('ALTER TABLE messages DROP departementname');
+        $this->addSql('ALTER TABLE messages ADD CONSTRAINT FK_DB021E96CCF9E01E FOREIGN KEY (departement_id) REFERENCES departement (id)');
         $this->addSql('CREATE INDEX IDX_DB021E96CCF9E01E ON messages (departement_id)');
     }
 
@@ -30,6 +30,6 @@ final class Version20220104120519 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE messages DROP FOREIGN KEY FK_DB021E96CCF9E01E');
         $this->addSql('DROP INDEX IDX_DB021E96CCF9E01E ON messages');
-        $this->addSql('ALTER TABLE messages DROP departementname');
+        $this->addSql('ALTER TABLE messages ADD departementname VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
     }
 }

@@ -6,6 +6,7 @@ use App\Entity\ContactRequest;
 use App\Entity\Messages;
 use App\Repository\DepartementRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class MailToDatabaseService
@@ -17,23 +18,26 @@ class MailToDatabaseService
      * @var EntityManagerInterface
      */
     private $em;
+    private $logger;
 
-    public function __construct(EntityManagerInterface $em, DepartementRepository $departementRepository)
+    public function __construct(EntityManagerInterface $em, DepartementRepository $departementRepository, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->departementRepository = $departementRepository;
+        $this->logger = $logger;
     }
 
     public function saveMessageFromContactRequest(ContactRequest $contactRequest)
     {
+
+        $this->logger->info("Departement choisis : " . $contactRequest->getDepartement()->getName());
 
         $message = new Messages();
         $message->setSender($contactRequest->getMail())
             ->setReceiver($contactRequest->getDepartement()->getResponsable())
             ->setSubject($contactRequest->getObject())
             ->setMessage($contactRequest->getMessage())
-            ->setDepartement($contactRequest->getDepartement())
-            ->setDepartementname($contactRequest->getDepartement()->getName());
+            ->setDepartement($contactRequest->getDepartement());
 
         $this->em->persist($message);
         $this->em->flush($message);

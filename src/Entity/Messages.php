@@ -43,10 +43,6 @@ class Messages
      */
     private $departement;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $departementname;
 
     public function getId(): ?int
     {

@@ -7,6 +7,7 @@ use App\Entity\ContactRequest;
 use App\Event\SendMailEvent;
 
 use App\Repository\DepartementRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -35,7 +36,9 @@ class SendMailSubscriber implements EventSubscriberInterface {
 
         $data = $event->getInfo();
 
+
         $contactRequest = $event->getInfo();
+
         $email = (new Email())
             ->from($contactRequest->getMail())
             ->to($contactRequest->getDepartement()->getResponsable())
