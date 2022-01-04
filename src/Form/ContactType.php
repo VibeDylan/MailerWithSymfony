@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\ContactRequest;
 use App\Entity\Departement;
 use App\Entity\Messages;
 use App\Entity\Purchase;
@@ -46,6 +47,13 @@ class ContactType extends AbstractType
                 'label' => 'Votre message',
                 'attr' => ['placeholder' => 'Veuillez tapez votre message']
             ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => ContactRequest::class,
+        ]);
     }
 
 }

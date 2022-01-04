@@ -3,6 +3,7 @@
 namespace App\EventDispatcher;
 
 
+use App\Entity\ContactRequest;
 use App\Event\SendMailEvent;
 
 use App\Repository\DepartementRepository;
@@ -33,14 +34,13 @@ class SendMailSubscriber implements EventSubscriberInterface {
     public function sendMail(SendMailEvent $event) {
 
         $data = $event->getInfo();
-        $whoResponsable = $this->departementRepository->find($data['departement']);
-       //  dd($event);
 
+        $contactRequest = $event->getInfo();
         $email = (new Email())
-            ->from($data['mail'])
-            ->to($whoResponsable->getResponsable())
-            ->subject($data['object'])
-            ->html($data['message']);
+            ->from($contactRequest->getMail())
+            ->to($contactRequest->getDepartement()->getResponsable())
+            ->subject($contactRequest->getObject())
+            ->html($contactRequest->getMessage());
 
 
         $this->mailer->send($email);

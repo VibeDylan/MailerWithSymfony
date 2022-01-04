@@ -2,6 +2,7 @@
 
 namespace App\MailService;
 
+use App\Entity\ContactRequest;
 use App\Entity\Messages;
 use App\Repository\DepartementRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,16 +17,14 @@ class MailToDatabaseService
         $this->departementRepository = $departementRepository;
     }
 
-    public function saveMessage(Request $request)
+    public function saveMessageFromContactRequest(ContactRequest $contactRequest)
     {
-        $formSubmit = $request->get('contact');
-        $whoResponsable = $this->departementRepository->find($formSubmit['departement']);
 
         $message = new Messages();
-        $message->setSender($formSubmit['mail'])
-            ->setReceiver($whoResponsable->getResponsable())
-            ->setSubject($formSubmit['object'])
-            ->setMessage($formSubmit['message']);
+        $message->setSender($contactRequest->getMail())
+            ->setReceiver($contactRequest->getDepartement()->getResponsable())
+            ->setSubject($contactRequest->getObject())
+            ->setMessage($contactRequest->getMessage());
 
         $this->em->persist($message);
         $this->em->flush($message);

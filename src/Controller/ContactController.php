@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ContactRequest;
 use App\Event\SendMailEvent;
 use App\Form\ContactType;
 use App\MailService\MailToDatabaseService;
@@ -17,18 +18,17 @@ class ContactController extends AbstractController
     /**
      * @Route("/", name="contact")
      */
-    public function create(Request $request, MailToDatabaseService $message, EventDispatcherInterface $eventDispatcher)
+    public function create(Request $request, MailToDatabaseService $mailToDatabaseService, EventDispatcherInterface $eventDispatcher)
     {
-
-        $form = $this->createForm(ContactType::class);
-        $formView = $form->createView();
+        $contactRequest = new ContactRequest();
+        $form = $this->createForm(ContactType::class, $contactRequest);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $message->saveMessage($request);
+            $mailToDatabaseService->saveMessageFromContactRequest($contactRequest);
 
-            $emailEvent = new SendMailEvent($request->get('contact'));
+            $emailEvent = new SendMailEvent($contactRequest);
             $eventDispatcher->dispatch($emailEvent, 'send.mail');
 
             $this->addFlash("success", "Votre message à bien était envoyé");
@@ -36,7 +36,7 @@ class ContactController extends AbstractController
 
 
         return $this->render('contact/index.html.twig', [
-            'formView' => $formView
+            'formView' => $form->createView()
         ]);
     }
 }
