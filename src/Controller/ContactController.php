@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\ContactRequest;
+use App\Entity\Contact;
 use App\Event\SendMailEvent;
 use App\Form\ContactType;
 use App\MailService\MailToDatabaseService;
@@ -20,7 +20,7 @@ class ContactController extends AbstractController
      */
     public function create(Request $request, MailToDatabaseService $mailToDatabaseService, EventDispatcherInterface $eventDispatcher)
     {
-        $contactRequest = new ContactRequest();
+        $contactRequest = new Contact();
         $form = $this->createForm(ContactType::class, $contactRequest);
         $form->handleRequest($request);
 
@@ -40,3 +40,9 @@ class ContactController extends AbstractController
         ]);
     }
 }
+
+//
+//
+//Ensuite, je demande à effectuer ce meme exercice, mais en API, comme si une app VuesJs/React l'appelait.
+//Cad:
+//une get pour avoir les départements, une post pour envoyer l'information et générer le mail

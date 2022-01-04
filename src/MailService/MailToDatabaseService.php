@@ -2,7 +2,7 @@
 
 namespace App\MailService;
 
-use App\Entity\ContactRequest;
+use App\Entity\Contact;
 use App\Entity\Messages;
 use App\Repository\DepartementRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,7 +27,7 @@ class MailToDatabaseService
         $this->logger = $logger;
     }
 
-    public function saveMessageFromContactRequest(ContactRequest $contactRequest)
+    public function saveMessageFromContactRequest(Contact $contactRequest)
     {
 
         $this->logger->info("Departement choisis : " . $contactRequest->getDepartement()->getName());

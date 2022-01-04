@@ -3,10 +3,11 @@
 namespace App\EventDispatcher;
 
 
-use App\Entity\ContactRequest;
+use App\Entity\Contact;
 use App\Event\SendMailEvent;
 
 use App\Repository\DepartementRepository;
+use http\Env\Request;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -32,10 +33,9 @@ class SendMailSubscriber implements EventSubscriberInterface {
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendMail(SendMailEvent $event) {
+    public function sendMail(SendMailEvent $event, Request $request) {
 
         $data = $event->getInfo();
-
 
         $contactRequest = $event->getInfo();
 

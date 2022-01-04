@@ -6,6 +6,7 @@ use App\Repository\DepartementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=DepartementRepository::class)
@@ -16,32 +17,36 @@ class Departement
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("departement:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("departement:read")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("departement:read")
      */
     private $responsable;
 
-    /**
-     * @ORM\OneToMany(targetEntity=ContactRequest::class, mappedBy="departement")
-     */
-    private $contactRequests;
+//    /**
+//     * @ORM\OneToMany(targetEntity=ContactRequest::class, mappedBy="departement")
+//     */
+//    private $contactRequests;
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="departement")
+     *
      */
     private $messages;
 
     public function __construct()
     {
-        $this->contactRequests = new ArrayCollection();
+        // $this->contactRequests = new ArrayCollection();
         $this->messages = new ArrayCollection();
     }
 
@@ -74,39 +79,37 @@ class Departement
         return $this;
     }
 
-    /**
-     * @return Collection|ContactRequest[]
-     */
-    public function getContactRequests(): Collection
-    {
-        return $this->contactRequests;
-    }
+//    /**
+//     * @return Collection|ContactRequest[]
+//     */
+//    public function getContactRequests(): Collection
+//    {
+//        return $this->contactRequests;
+//    }
+//
+//    public function addContactRequest(ContactRequest $contactRequest): self
+//    {
+//        if (!$this->contactRequests->contains($contactRequest)) {
+//            $this->contactRequests[] = $contactRequest;
+//            $contactRequest->setDepartement($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeContactRequest(ContactRequest $contactRequest): self
+//    {
+//        if ($this->contactRequests->removeElement($contactRequest)) {
+//            // set the owning side to null (unless already changed)
+//            if ($contactRequest->getDepartement() === $this) {
+//                $contactRequest->setDepartement(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 
-    public function addContactRequest(ContactRequest $contactRequest): self
-    {
-        if (!$this->contactRequests->contains($contactRequest)) {
-            $this->contactRequests[] = $contactRequest;
-            $contactRequest->setDepartement($this);
-        }
 
-        return $this;
-    }
-
-    public function removeContactRequest(ContactRequest $contactRequest): self
-    {
-        if ($this->contactRequests->removeElement($contactRequest)) {
-            // set the owning side to null (unless already changed)
-            if ($contactRequest->getDepartement() === $this) {
-                $contactRequest->setDepartement(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Messages[]
-     */
     public function getMessages(): Collection
     {
         return $this->messages;

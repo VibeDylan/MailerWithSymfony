@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\MessagesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MessagesRepository::class)
+ *
  */
 class Messages
 {
@@ -19,27 +22,40 @@ class Messages
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
+     * @Assert\NotBlank
+     *
      */
     private $sender;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
+     * @Assert\NotBlank
+     *
      */
     private $receiver;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=255, minMessage="L'objet de votre sujet doit faire au minimum 2 caractères.")
+     *
      */
     private $subject;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(min=20, max=255, minMessage="L'objet de votre sujet doit faire au minimum 20 caractères.")
+     *
      */
     private $message;
 
     /**
      * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $departement;
 
@@ -105,18 +121,6 @@ class Messages
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
-
-        return $this;
-    }
-
-    public function getDepartementname(): ?string
-    {
-        return $this->departementname;
-    }
-
-    public function setDepartementname(string $departementname): self
-    {
-        $this->departementname = $departementname;
 
         return $this;
     }

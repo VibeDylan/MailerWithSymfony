@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\ContactRequest;
+use App\Entity\Contact;
 use App\Entity\Departement;
 use App\Entity\Messages;
 use App\Entity\Purchase;
@@ -52,7 +52,7 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ContactRequest::class,
+            'data_class' => Contact::class,
         ]);
     }
 
